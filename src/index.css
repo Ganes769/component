@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+  .default {
+    margin: 8px;
+    padding: 4px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 142px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .btn-primary {
+    color: theme("colors.customWhite");
+    background-color: theme("colors.customPurple");
+  }
+  .btn-primary:disabled {
+    background-color: #eeeeee;
+    color: #cad3e0;
+  }
+
+  /* .btn-primary:hover {
+    border-width: 2px;
+    border-color: #e1dfff;
+  } */
+  .btn-secondary {
+    background-color: theme("colors.customWhite");
+    border-width: 2px;
+    border-color: #b3bbc8;
+  }
+  .btn-tertiary {
+    background-color: theme("colors.customWhite");
+    color: theme("colors.customPurple");
+    border: none;
+  }
+  .btn-tertiary:hover {
+    box-shadow: 0 4px 8px rgba(232, 217, 231, 1);
+  }
+
+  .btn-error {
+    background-color: theme("colors.customRed");
+    color: theme("colors.customWhite");
+  }
+  .btn-errorSecondary {
+    background-color: theme("colors.customWhite");
+    color: theme("colors.customRed");
+    border-width: 2px;
+    border-color: theme("colors.customRed");
+  }
+  .btn-errorTertiary {
+    background-color: theme("colors.customWhite");
+    color: theme("colors.customRed");
+  }
+  .btn-error {
+    margin: 8px;
+    padding: 4px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+  }
+}
