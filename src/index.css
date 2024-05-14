@@ -16,17 +16,17 @@
   }
   .btn-primary {
     color: theme("colors.customWhite");
-    background-color: theme("colors.customPurple");
+    background-color: theme("colors.primaryColor");
   }
   .btn-primary:disabled {
     background-color: #eeeeee;
     color: #cad3e0;
   }
 
-  /* .btn-primary:hover {
+  .btn-primary:hover {
     border-width: 2px;
     border-color: #e1dfff;
-  } */
+  }
   .btn-secondary {
     background-color: theme("colors.customWhite");
     border-width: 2px;

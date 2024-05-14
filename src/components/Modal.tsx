@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
-import Button from "./Buttons";
+import Button from "./Button";
 
 interface Props {
   title: string;

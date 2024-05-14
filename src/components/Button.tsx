@@ -3,7 +3,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: "standard" | "plain" | "outline" | "error";
   errorvarient?: "standard" | "plain" | "outline";
   title: string;
-  color?: string;
   hasIcon: boolean;
   iconPos?: "start" | "end";
   icon?: ReactNode;
