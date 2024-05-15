@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         primaryColor: "#6861ff",
-        colorSecondaruy: "#FFFFFF",
+        secondaryColor: "#FFFFFF",
         customPurple: "6861ff#",
         customGray: "#b3bbc8",
         customWhite: "#ffffff",

@@ -1,8 +1,10 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import Button from "./Button";
+import Icon from "./Icon";
 
 interface Props {
   title: string;
+  message: string;
 }
 
 const Modal = forwardRef<any, Props>(({ title }, ref) => {
@@ -40,19 +42,18 @@ const Modal = forwardRef<any, Props>(({ title }, ref) => {
             </p>
             <div className="flex mt-3 w-full justify-center">
               <Button
-                color="green"
                 title="Proceed to Next"
                 hasIcon={true}
+                icon={<Icon name="forWardRight" size={12} />}
                 iconPos="end"
                 variant="standard"
               />
               <Button
-                color="red"
                 onClick={() => setShowModal(false)}
                 title="Cancel"
                 hasIcon={false}
                 iconPos="end"
-                variant="standard"
+                variant="outline"
               />
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from "react";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: "standard" | "plain" | "outline" | "error";
   errorvarient?: "standard" | "plain" | "outline";
@@ -42,7 +42,7 @@ export default function Button({
 
   return (
     <button {...props} className={`default ${varientclass}`}>
-      {hasIcon && iconPos === "start" && icon}
+      {hasIcon && iconPos == "start" && icon}
       {title}
       {hasIcon && iconPos === "end" && icon}
     </button>

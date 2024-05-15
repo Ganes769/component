@@ -7,8 +7,9 @@ import { toastConfig } from "./components/Toaster/toastConfig";
 import Button from "./components/Button";
 import Modal from "./components/Modal";
 import useToasthook from "./components/Toaster/useToasthook";
+import Icon from "./components/Icon";
 function App() {
-  const modalref = useRef<any>(null);
+  const modalref = useRef<{ cancel: () => void; show: () => void }>(null);
   function showModal() {
     modalref?.current?.show();
   }
@@ -28,14 +29,30 @@ function App() {
         title="Modal"
         variant="standard"
       />
-      <Modal ref={modalref} title="modal title" />
+      <p></p>
+      <Modal message="lo" ref={modalref} title="modal title" />
       {/* Toaster */}
       <Button
         onClick={() => errorMsg("Error", "Error toaster messege")}
         hasIcon={false}
-        title="toaster"
+        title="error"
         variant="outline"
       />
+      <Button
+        onClick={() => successMsg("Success", "Success toaster messege")}
+        hasIcon={false}
+        title="succsess"
+        variant="outline"
+      />
+      <Button
+        hasIcon={true}
+        iconPos="start"
+        title="Primary"
+        icon={<Icon name="forwardRight" size={12} />}
+        variant="error"
+        errorvarient="plain"
+      />
+      <Button variant="error" hasIcon={false} title="Error" />
       <ToastContainer {...toastConfig} />
     </div>
   );
