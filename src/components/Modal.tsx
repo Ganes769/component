@@ -12,9 +12,6 @@ const Modal = forwardRef<any, Props>(({ title }, ref) => {
   useImperativeHandle(
     ref,
     () => ({
-      cancel: () => {
-        setShowModal(false);
-      },
       show: () => {
         setShowModal(true);
       },

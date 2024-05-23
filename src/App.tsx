@@ -1,60 +1,114 @@
-import "./index.css";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRef } from "react";
-import Chip from "./components/Chip";
-import { toastConfig } from "./components/Toaster/toastConfig";
-import Button from "./components/Button";
+import { useRef, useState } from "react";
+import "./App.css";
+
+export type OptionPropTypes = {
+  name: string;
+  id: string;
+};
+import Autocompletefield from "./components/Autocompletefield";
+import MultipleChip from "./components/MultipleChip";
 import Modal from "./components/Modal";
 import useToasthook from "./components/Toaster/useToasthook";
-import Icon from "./components/Icon";
+import Button from "./components/Button";
+import { ToastContainer, toast } from "react-toastify";
+import { toastConfig } from "./components/Toaster/toastConfig";
+import Chip from "./components/Chip";
 function App() {
-  const modalref = useRef<{ cancel: () => void; show: () => void }>(null);
+  const { errorMsg, successMsg } = useToasthook();
+  const modalref = useRef<any>(null);
   function showModal() {
     modalref?.current?.show();
   }
-  const { successMsg, errorMsg } = useToasthook();
-  return (
-    <div className="w-1/3 flex justify-center items-center flex-col gap-3 mt-10 mx-auto">
-      {/* Reusable Chip Component */}
-      <Chip name="active" />
-      <Chip name="deactive" />
-      {/* Button Component */}
+  const [defaultChips, setdefaulatChips] = useState<OptionPropTypes[]>([
+    {
+      id: "1",
+      name: "The Godfather: Part II",
+    },
+  ]);
+  const [field, setField] = useState<OptionPropTypes>({
+    id: "1",
+    name: "The Godfather: Part II",
+  });
+  const handleFieldChange = (value: OptionPropTypes) => {
+    console.log("Selected values are :", value);
+    setField(value);
+  };
+  const handleChipChange = (value: OptionPropTypes[]) => {
+    setdefaulatChips(value);
+    console.log("selected tags are ", value);
+  };
 
-      <Button hasIcon={false} title="primary" variant="standard" />
-      {/* Modal component */}
-      <Button
-        onClick={() => showModal()}
-        hasIcon={true}
-        title="Modal"
-        variant="standard"
-      />
-      <p></p>
-      <Modal message="lo" ref={modalref} title="modal title" />
-      {/* Toaster */}
-      <Button
-        onClick={() => errorMsg("Error", "Error toaster messege")}
-        hasIcon={false}
-        title="error"
-        variant="outline"
-      />
-      <Button
-        onClick={() => successMsg("Success", "Success toaster messege")}
-        hasIcon={false}
-        title="succsess"
-        variant="outline"
-      />
-      <Button
-        hasIcon={true}
-        iconPos="start"
-        title="Primary"
-        icon={<Icon name="forwardRight" size={12} />}
-        variant="error"
-        errorvarient="plain"
-      />
-      <Button variant="error" hasIcon={false} title="Error" />
+  const options: OptionPropTypes[] = [
+    {
+      id: "1",
+      name: "The Godfather: Part II",
+    },
+    {
+      id: "2",
+      name: "Hello1",
+    },
+    {
+      id: "3",
+      name: "12 Angry Men",
+    },
+    {
+      id: "4",
+      name: "The Return of the King",
+    },
+    {
+      id: "5",
+      name: "Hello4",
+    },
+    { id: "66", name: "The Shawshank Redemption" },
+  ];
+
+  return (
+    <>
+      <div className="w-1/3 flex justify-center items-center flex-col gap-3 mt-10 mx-auto">
+        Reusable Component
+        <MultipleChip
+          defaultChip={defaultChips}
+          options={options}
+          handleChange={handleChipChange}
+        />
+        <Autocompletefield
+          field={field}
+          onChange={handleFieldChange}
+          options={options}
+        />
+        {/* Modal -useimperativehandle */}
+        <Button
+          onClick={() => showModal()}
+          hasIcon={false}
+          title="Modal"
+          variant="standard"
+        />
+        <Modal
+          message="Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s,"
+          ref={modalref}
+          title="modal title"
+        />
+        {/* //Toaster */}
+        <Button
+          onClick={() => errorMsg("Title", "description")}
+          title="Error"
+          hasIcon={false}
+          variant="plain"
+        />
+        <Button
+          onClick={() => successMsg("Title", "description")}
+          title="Success"
+          hasIcon={false}
+          variant="plain"
+        />
+        {/* chips  */}
+        <Chip status="active" />
+        <Chip status="deactive" />
+      </div>
       <ToastContainer {...toastConfig} />
-    </div>
+    </>
   );
 }
 

@@ -1,18 +1,18 @@
 interface ChipProps {
-  name: string;
+  status: string;
 }
 
-export default function Chip({ name }: ChipProps) {
-  const getChipClass = (name: string) => {
-    switch (name) {
+export default function Chip({ status }: ChipProps) {
+  const getChipClass = (status: string) => {
+    switch (status) {
       case "active":
-        return "bg-[#E9F9F0] rounded-md  px-md py-sm text-[#33B469]";
+        return "bg-[#E9F9F0] rounded-md  px-2 py-[3px] text-[#33B469]";
       case "deactive":
-        return "bg-[#ECEDEF] rounded-md px-md py-sm text-[#8C94A0]";
+        return "bg-[#ECEDEF] rounded-md px-sm py-sm text-[#8C94A0]";
       default:
         return "rounded-md text-black";
     }
   };
-  getChipClass(name);
-  return <span className={getChipClass(name)}> {name}</span>;
+  getChipClass(status);
+  return <span className={getChipClass(status)}> {status}</span>;
 }
