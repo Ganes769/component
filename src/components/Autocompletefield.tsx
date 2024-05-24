@@ -1,8 +1,6 @@
 import React, { MouseEvent, useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
-import { MdArrowDropUp } from "react-icons/md";
 import { OptionPropTypes } from "../App";
-import Icon from "./Icon";
 
 interface AutoCompleteFieldProps {
   options: OptionPropTypes[];

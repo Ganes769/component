@@ -133,7 +133,11 @@ function App() {
           title="Modal"
           variant="standard"
         />
-        <Modal onCancel={closeModal} onAccept={onAccept} ref={modalref} />
+        <Modal
+          onCancel={() => closeModal()}
+          onAccept={() => onAccept()}
+          ref={modalref}
+        />
         {/* //Toaster */}
         <Button
           onClick={() => errorMsg("Title", "description")}

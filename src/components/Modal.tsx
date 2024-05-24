@@ -9,7 +9,7 @@ import Icon from "./Icon";
 
 interface Props {
   onAccept: () => void;
-  onCancel?: () => void;
+  onCancel: () => void;
 }
 
 const Modal = forwardRef<
@@ -58,7 +58,7 @@ const Modal = forwardRef<
                   variant="standard"
                 />
                 <Button
-                  onClick={onCancel}
+                  onClick={() => onCancel()}
                   title="Cancel"
                   hasIcon={false}
                   iconPos="end"
