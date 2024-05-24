@@ -1,19 +1,34 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
+import {
+  MutableRefObject,
+  forwardRef,
+  useImperativeHandle,
+  useState,
+} from "react";
 import Button from "./Button";
 import Icon from "./Icon";
 
 interface Props {
-  title: string;
-  message: string;
+  onAccept: () => void;
+  onCancel?: () => void;
 }
 
-const Modal = forwardRef<any, Props>(({ title }, ref) => {
+const Modal = forwardRef<
+  { show: (title: string, message: string) => void; cancel: () => void },
+  Props
+>(({ onAccept, onCancel }, ref) => {
+  const [title, setTitle] = useState<string>();
+  const [message, setMessage] = useState<string>();
   const [showModal, setShowModal] = useState(false);
   useImperativeHandle(
     ref,
     () => ({
-      show: () => {
+      show: (title: string, message: string) => {
         setShowModal(true);
+        setTitle(title);
+        setMessage(message);
+      },
+      cancel: () => {
+        setShowModal(false);
       },
     }),
     []
@@ -22,36 +37,34 @@ const Modal = forwardRef<any, Props>(({ title }, ref) => {
   return (
     <>
       {showModal && (
-        <div className=" fixed w-1/2 h-[222px] left-0 right-0 top-0 z-10 overflow-auto justify-center bg-white shadow-lg bg-opacity-30 backdrop-blur-sm items-center rounded-md">
-          <div className="flex justify-end px-6 mt-6">
-            <h1
-              onClick={() => setShowModal(false)}
-              className="text-black font-semibold cursor-pointer text-[18px]"
-            >
-              x
-            </h1>
-          </div>
-          <div className="w-full flex flex-col items-center px-6 my-3">
-            <h1 className="text-black font-bold text-[18px]">{title}</h1>
-            <p className="text-black text-center px-md ">
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s,
-            </p>
-            <div className="flex mt-3 w-full justify-center">
-              <Button
-                title="Proceed to Next"
-                hasIcon={true}
-                icon={<Icon name="forWardRight" size={12} />}
-                iconPos="end"
-                variant="standard"
-              />
-              <Button
-                onClick={() => setShowModal(false)}
-                title="Cancel"
-                hasIcon={false}
-                iconPos="end"
-                variant="outline"
-              />
+        <div
+          onClick={() => setShowModal(false)}
+          className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="h-[226px] w-10/12 shadow-lg rounded-md flex flex-col items-center justify-center bg-white"
+          >
+            <div className="w-full flex flex-col items-center justify-center px-6 my-3">
+              <h1 className="text-black font-bold text-[18px]">{title}</h1>
+              <p className="text-black text-center px-md">{message}</p>
+              <div className="flex mt-3 w-full justify-center">
+                <Button
+                  onClick={onAccept}
+                  title="Proceed to Next"
+                  hasIcon={true}
+                  icon={<Icon name="forWardRight" size={12} />}
+                  iconPos="end"
+                  variant="standard"
+                />
+                <Button
+                  onClick={onCancel}
+                  title="Cancel"
+                  hasIcon={false}
+                  iconPos="end"
+                  variant="outline"
+                />
+              </div>
             </div>
           </div>
         </div>

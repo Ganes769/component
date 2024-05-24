@@ -9,6 +9,14 @@
     <path d="M11.3333 5L0.666672 5M11.3333 5L7.33334 9M11.3333 5L7.33334 1" fill="currentColor" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
 
   </symbol>
+    <symbol id="icon-upArrowDrop" viewBox="" >
+  <path
+    d="M1 1.09088L6 6.09088L11 1.09088"
+    stroke="#8C94A0"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  </symbol>
 </svg>;
-
 

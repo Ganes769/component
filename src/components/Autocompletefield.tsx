@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { IoMdArrowDropdown } from "react-icons/io";
+import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { MdArrowDropUp } from "react-icons/md";
 import { OptionPropTypes } from "../App";
+import Icon from "./Icon";
 
-type AutoCompleteFieldProps = {
+interface AutoCompleteFieldProps {
   options: OptionPropTypes[];
   onChange: (value: OptionPropTypes) => void;
-  field?: OptionPropTypes;
-};
+  value?: OptionPropTypes;
+}
 
 export interface DropdownTypes {
   name: string;
@@ -16,10 +17,10 @@ export interface DropdownTypes {
 
 export default function Autocompletefield({
   options,
-  field,
+  value,
   onChange,
 }: AutoCompleteFieldProps) {
-  const [userInput, setUserInput] = useState<string>(field?.name || "");
+  const [userInput, setUserInput] = useState<string>(value?.name || "");
   const [isOptionOpen, setisOptionOpen] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<OptionPropTypes[]>(options);
 
@@ -42,29 +43,46 @@ export default function Autocompletefield({
       )
     );
   }
-  console.log(field);
+  function toggleList(e: MouseEvent) {
+    e.stopPropagation();
+    setisOptionOpen((prev) => !prev);
+  }
+  const boxRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    window.onclick = (event) => {
+      if (boxRef.current && !boxRef.current.contains(event.target as Node)) {
+        isOptionOpen && setisOptionOpen(false);
+      }
+    };
+  }, [isOptionOpen]);
+
+  console.log(isOptionOpen);
   return (
-    <div className="relative w-[410px]">
-      <div className="flex p-1 items-center justify-between border-2">
+    <div
+      ref={boxRef}
+      onClick={() => setisOptionOpen(true)}
+      className={`relative  w-[410px]`}
+    >
+      <div className="flex  items-center justify-between border-2">
         <input
           value={userInput}
           onChange={handleInputChange}
           onFocus={() => setisOptionOpen(true)}
-          className="h-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
+          className="h-full w-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
           type="text"
           placeholder="enter your text"
         />
-        {isOptionOpen ? (
-          <MdArrowDropUp onClick={() => setisOptionOpen(false)} />
-        ) : (
-          <IoMdArrowDropdown onClick={() => setisOptionOpen(true)} />
-        )}
+        <div className="cursor-pointer mr-2" onClick={toggleList}>
+          {isOptionOpen ? (
+            <IoMdArrowDropup onClick={toggleList} />
+          ) : (
+            <IoMdArrowDropdown onClick={toggleList} />
+          )}
+        </div>
       </div>
       <ul
-        className={` bg-white shadow-md mt-2  rounded-md w-full absolute overflow-y-auto  ${
-          isOptionOpen
-            ? "block border-2 border-[#8C94A0]"
-            : "border-none hidden "
+        className={` bg-white h-[200px] shadow-md mt-2 scrollbar rounded-md w-full absolute overflow-y-auto  ${
+          isOptionOpen ? "block" : "border-none hidden "
         }`}
       >
         {isOptionOpen &&
@@ -72,7 +90,7 @@ export default function Autocompletefield({
             <li
               key={index}
               onClick={() => handleClickSuggestion(value)}
-              className={`p-2 text-black hover:bg-gray-300 ${
+              className={`p-2 text-black bg-red- hover:bg-gray-300 ${
                 value.name == userInput && "bg-[#F2F4F7]"
               } `}
             >
