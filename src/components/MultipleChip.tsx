@@ -84,7 +84,11 @@ function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
           placeholder="enter your text"
         />
       </div>
-      <ul className="bg-white mt-2 w-full scrollbar  overflow-y-auto shadow-md rounded-md absolute z-10">
+      <ul
+        className={`bg-white mt-2 h-[200px]  w-full scrollbar  overflow-y-auto shadow-md rounded-md absolute z-10 ${
+          isOptionOpen ? "block" : "hidden"
+        }`}
+      >
         {isOptionOpen &&
           suggestions.map((value, index) => (
             <li

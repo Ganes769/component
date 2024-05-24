@@ -80,6 +80,7 @@
     background: #dbdfe6;
     width: 20px;
     border-radius: 100vh;
+    padding: 2px;
     border: 1px solid #dbdfe6;
   }
 }
