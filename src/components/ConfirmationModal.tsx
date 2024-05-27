@@ -9,14 +9,13 @@ import Button from "./Button";
 interface Props {
   onAccept: () => void;
   onCancel: () => void;
-  height: string;
-  width: string;
+  className: string;
 }
 
 const ConfirmationModal = forwardRef<
   { show: (title: string, message: string) => void; cancel: () => void },
   Props
->(({ onAccept, onCancel, height, width }, ref) => {
+>(({ onAccept, onCancel, className }, ref) => {
   const [title, setTitle] = useState<string>();
   const [message, setMessage] = useState<string>();
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +45,7 @@ const ConfirmationModal = forwardRef<
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`h-[${height}] w-[${width}] shadow-lg rounded-md flex flex-col items-center justify-center bg-white transform transition-transform ${
+            className={` ${className} shadow-lg rounded-md flex flex-col items-center justify-center bg-white transform transition-transform ${
               showModal && "animate-scaleIn"
             }`}
           >

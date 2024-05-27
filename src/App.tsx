@@ -143,13 +143,16 @@ function App() {
           variant="standard"
         />
         <ConfirmationModal
-          height="200px"
-          width="400px"
+          className="h-[200px] w-[300px]"
           onCancel={() => closeModal()}
           onAccept={() => onAccept()}
           ref={modalref}
         />
-        <Modal showModal={showModal} setShowModal={setShowModal}>
+        <Modal
+          className="h-[200px] w-[300px]"
+          showModal={showModal}
+          setShowModal={setShowModal}
+        >
           <ModalContent report={report} />
         </Modal>
         {/* //Toaster */}

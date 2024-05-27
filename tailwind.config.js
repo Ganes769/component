@@ -14,7 +14,6 @@ export default {
         blur: {
           "0%": { opacity: "0" },
           "40%": { opacity: "0.5" },
-
           "100%": { opacity: "1" },
         },
       },
@@ -34,6 +33,7 @@ export default {
       animation: {
         scaleIn: "scaleIn 0.4s ease-in-out forwards",
         blur: "blur 0.4s ease-in-out forwards",
+        fade: "blur 0.4s ease-in-out forwards",
       },
     },
   },
