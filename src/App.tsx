@@ -20,13 +20,15 @@ import Modal from "./components/Modal";
 function App() {
   const { errorMsg, successMsg } = useToasthook();
   const modalref = useRef<{
-    show: (title: string, message: string) => void;
+    show: (title: string, message: string, refId: number) => void;
     cancel: () => void;
+    onAccept: (refId: number) => void;
   }>(null);
   function showConfirmModal() {
     modalref?.current?.show(
       "Connection Successful",
-      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+      77
     );
   }
   // Detail modal
@@ -77,9 +79,7 @@ function App() {
     },
     { id: "66", name: "The Shawshank Redemption" },
   ];
-  function onAccept(refid: number) {
-    console.log("proceed to next", refid);
-  }
+
   function closeModal() {
     modalref?.current?.cancel();
     console.log("cancel model");
@@ -111,6 +111,9 @@ function App() {
       detail: "8000",
     },
   ];
+  function handleAccept() {
+    console.log("acccepted ");
+  }
 
   return (
     <>
@@ -144,9 +147,9 @@ function App() {
         />
 
         <ConfirmationModal
+          onAccept={handleAccept}
           className="h-[200px] w-[300px]"
           onCancel={() => closeModal()}
-          onAccept={() => onAccept(77)}
           ref={modalref}
         />
         <Modal
