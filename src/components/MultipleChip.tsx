@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { OptionPropTypes } from "../App";
-import { IoMdCloseCircle } from "react-icons/io";
 import { Lucide } from "./Lucide";
-
 interface AutoCompleteFieldProps {
   options: OptionPropTypes[];
   onChange: (value: OptionPropTypes[]) => void;
@@ -44,7 +42,6 @@ function MultipleChip({
       handleDeleteChip(value.id);
     }
   }
-
   console.log("default options", selectedOption);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -56,7 +53,6 @@ function MultipleChip({
       )
     );
   }
-
   function handleDeleteChip(id: string) {
     const newSelectedOption = selectedOption.filter((item) => item.id !== id);
     setSelectedOption(newSelectedOption);
@@ -103,7 +99,7 @@ function MultipleChip({
             <li
               key={index}
               onClick={() => hadleClickSuggestion(value)}
-              className={`p-2 m-2 text-black hover:bg-gray-300 ${
+              className={`p-2 flex justify-between m-2 text-black hover:bg-gray-300 ${
                 selectedOption.some((item) => item.id === value.id) &&
                 "bg-[#F2F4F7]"
               }`}

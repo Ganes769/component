@@ -1,13 +1,8 @@
-import {
-  MutableRefObject,
-  forwardRef,
-  useImperativeHandle,
-  useState,
-} from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import Button from "./Button";
 
 interface Props {
-  onAccept: () => void;
+  onAccept: (refid: number) => void;
   onCancel: () => void;
   className: string;
 }
@@ -45,7 +40,7 @@ const ConfirmationModal = forwardRef<
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={` ${className} shadow-lg rounded-md flex flex-col items-center justify-center bg-white transform transition-transform ${
+            className={`${className} shadow-lg rounded-md flex flex-col items-center justify-center bg-white transform transition-transform ${
               showModal && "animate-scaleIn"
             }`}
           >
@@ -54,7 +49,7 @@ const ConfirmationModal = forwardRef<
               <p className="text-black text-center px-md">{message}</p>
               <div className="flex mt-3 w-full justify-center">
                 <Button
-                  onClick={onAccept}
+                  onClick={() => onAccept(66)}
                   title="Proceed to Next"
                   hasIcon={false}
                   iconPos="end"

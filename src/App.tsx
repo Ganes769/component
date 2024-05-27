@@ -77,8 +77,8 @@ function App() {
     },
     { id: "66", name: "The Shawshank Redemption" },
   ];
-  function onAccept() {
-    console.log("proceed to next");
+  function onAccept(refid: number) {
+    console.log("proceed to next", refid);
   }
   function closeModal() {
     modalref?.current?.cancel();
@@ -121,13 +121,13 @@ function App() {
           options={options}
           onChange={handleChipChange}
         />
-        <Autocompletefield
+        {/* <Autocompletefield
           tickOption={false}
           className=""
           value={value}
           onChange={handleFieldChange}
           options={options}
-        />
+        /> */}
         <Autocompletefield
           tickOption={true}
           className=""
@@ -142,10 +142,11 @@ function App() {
           title="Modal"
           variant="standard"
         />
+
         <ConfirmationModal
           className="h-[200px] w-[300px]"
           onCancel={() => closeModal()}
-          onAccept={() => onAccept()}
+          onAccept={() => onAccept(77)}
           ref={modalref}
         />
         <Modal
