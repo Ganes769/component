@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { OptionPropTypes } from "../App";
 import { IoMdCloseCircle } from "react-icons/io";
+import { Lucide } from "./Lucide";
 
 interface AutoCompleteFieldProps {
   options: OptionPropTypes[];
   onChange: (value: OptionPropTypes[]) => void;
   value: OptionPropTypes[];
+  className: string;
 }
 
-function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
+function MultipleChip({
+  options,
+  onChange,
+  value,
+  className,
+}: AutoCompleteFieldProps) {
   const [suggestions, setSuggestions] = useState<OptionPropTypes[]>(options);
   const [option, setOption] = useState<string>("");
   const [isOptionOpen, setisOptionOpen] = useState<boolean>(false);
@@ -23,7 +30,7 @@ function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
     };
     setSelectedOption(value);
   }, [value, isOptionOpen]);
-  function hadleClickSuggestion(value: OptionPropTypes, index: number) {
+  function hadleClickSuggestion(value: OptionPropTypes) {
     const isDuplicate = selectedOption.some((item) => item.id === value.id);
     if (!isDuplicate) {
       const newSelectedOption = [...selectedOption, value];
@@ -37,6 +44,8 @@ function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
       handleDeleteChip(value.id);
     }
   }
+
+  console.log("default options", selectedOption);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setOption(e.target.value);
@@ -58,7 +67,7 @@ function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
     <div
       onClick={() => setisOptionOpen(true)}
       ref={boxRef}
-      className="relative min-w-[400px] max-w-[360px]"
+      className={`relative min-w-[400px] max-w-[360px]  ${className}`}
     >
       <div className="flex flex-row flex-wrap border-2">
         {selectedOption.map((item) => (
@@ -68,7 +77,7 @@ function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
           >
             <span className="mr-2 cursor-pointer ">{item.name}</span>
             <span>
-              <IoMdCloseCircle
+              <Lucide.circlex
                 size={18}
                 onClick={() => handleDeleteChip(item.id)}
               />
@@ -93,8 +102,8 @@ function MultipleChip({ options, onChange, value }: AutoCompleteFieldProps) {
           suggestions.map((value, index) => (
             <li
               key={index}
-              onClick={() => hadleClickSuggestion(value, index)}
-              className={`p-2 text-black hover:bg-gray-300 ${
+              onClick={() => hadleClickSuggestion(value)}
+              className={`p-2 m-2 text-black hover:bg-gray-300 ${
                 selectedOption.some((item) => item.id === value.id) &&
                 "bg-[#F2F4F7]"
               }`}

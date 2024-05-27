@@ -1,11 +1,13 @@
 import React, { MouseEvent, useEffect, useRef, useState } from "react";
-import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { OptionPropTypes } from "../App";
+import { Lucide } from "./Lucide";
 
 interface AutoCompleteFieldProps {
   options: OptionPropTypes[];
   onChange: (value: OptionPropTypes) => void;
   value?: OptionPropTypes;
+  className: string;
+  tickOption: boolean | true;
 }
 
 export interface DropdownTypes {
@@ -17,6 +19,8 @@ export default function Autocompletefield({
   options,
   value,
   onChange,
+  tickOption,
+  className,
 }: AutoCompleteFieldProps) {
   const [userInput, setUserInput] = useState<string>(value?.name || "");
   const [isOptionOpen, setisOptionOpen] = useState<boolean>(false);
@@ -59,7 +63,7 @@ export default function Autocompletefield({
     <div
       ref={boxRef}
       onClick={() => setisOptionOpen(true)}
-      className={`relative  w-[410px]`}
+      className={`relative  w-[410px]  ${className}`}
     >
       <div className="flex  items-center justify-between border-2">
         <input
@@ -72,14 +76,14 @@ export default function Autocompletefield({
         />
         <div className="cursor-pointer mr-2" onClick={toggleList}>
           {isOptionOpen ? (
-            <IoMdArrowDropup onClick={toggleList} />
+            <Lucide.arrowUp size={18} onClick={toggleList} />
           ) : (
-            <IoMdArrowDropdown onClick={toggleList} />
+            <Lucide.arrrowDown size={18} onClick={toggleList} />
           )}
         </div>
       </div>
       <ul
-        className={` bg-white h-[200px] shadow-md mt-2 scrollbar rounded-md w-full absolute overflow-y-auto  ${
+        className={` z-10 bg-white shadow-md mt-2 scrollbar rounded-md w-full absolute overflow-y-auto  ${
           isOptionOpen ? "block" : "border-none hidden "
         }`}
       >
@@ -88,11 +92,14 @@ export default function Autocompletefield({
             <li
               key={index}
               onClick={() => handleClickSuggestion(value)}
-              className={`p-2 text-black bg-red- hover:bg-gray-300 ${
-                value.name == userInput && "bg-[#F2F4F7]"
+              className={`p-2 m-2 text-black bg-red- hover:bg-gray-300 flex justify-between ${
+                value.name == userInput && "bg-[#F2F4F7] border  rounded-md"
               } `}
             >
               {value.name}
+              {tickOption && value.name == userInput && (
+                <Lucide.check strokeWidth={2} color="#33B469" />
+              )}
             </li>
           ))}
       </ul>

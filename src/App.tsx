@@ -6,34 +6,34 @@ export type OptionPropTypes = {
   name: string;
   id: string;
 };
+
 import Autocompletefield from "./components/Autocompletefield";
 import MultipleChip from "./components/MultipleChip";
-import Modal from "./components/Modal";
 import useToasthook from "./components/Toaster/useToasthook";
 import Button from "./components/Button";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { toastConfig } from "./components/Toaster/toastConfig";
 import Chip from "./components/Chip";
-import Icon from "./components/Icon";
-import DetailsModal from "./components/DetailsModal";
 import ModalContent from "./components/ModalContent";
+import ConfirmationModal from "./components/ConfirmationModal";
+import Modal from "./components/Modal";
 function App() {
   const { errorMsg, successMsg } = useToasthook();
   const modalref = useRef<{
     show: (title: string, message: string) => void;
     cancel: () => void;
   }>(null);
-  function showModal() {
+  function showConfirmModal() {
     modalref?.current?.show(
       "Connection Successful",
       "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
     );
   }
   // Detail modal
-  const [showDetailModal, setShowDeatailModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   function displayDetailModal() {
-    setShowDeatailModal(true);
+    setShowModal(true);
   }
 
   const [defaultChips, setdefaulatChips] = useState<OptionPropTypes[]>([
@@ -115,29 +115,43 @@ function App() {
   return (
     <>
       <div className="w-1/3 flex justify-center items-center flex-col gap-3 mt-10 mx-auto">
-        Reusable Component
         <MultipleChip
+          className="bg-white"
           value={defaultChips}
           options={options}
           onChange={handleChipChange}
         />
         <Autocompletefield
+          tickOption={false}
+          className=""
+          value={value}
+          onChange={handleFieldChange}
+          options={options}
+        />
+        <Autocompletefield
+          tickOption={true}
+          className=""
           value={value}
           onChange={handleFieldChange}
           options={options}
         />
         {/* Modal -useimperativehandle */}
         <Button
-          onClick={() => showModal()}
+          onClick={() => showConfirmModal()}
           hasIcon={false}
           title="Modal"
           variant="standard"
         />
-        <Modal
+        <ConfirmationModal
+          height="200px"
+          width="400px"
           onCancel={() => closeModal()}
           onAccept={() => onAccept()}
           ref={modalref}
         />
+        <Modal showModal={showModal} setShowModal={setShowModal}>
+          <ModalContent report={report} />
+        </Modal>
         {/* //Toaster */}
         <Button
           onClick={() => errorMsg("Title", "description")}
@@ -154,21 +168,16 @@ function App() {
         {/* chips  */}
         <Chip status="active" />
         <Chip status="deactive" />
-        <ToastContainer {...toastConfig} />
-        <div className="bg-red-800"></div>
-        <DetailsModal
-          showModal={showDetailModal}
-          setShowModal={setShowDeatailModal}
-        >
-          <ModalContent report={report} />
-        </DetailsModal>
         <Button
           onClick={() => displayDetailModal()}
           title="Details Modal"
           hasIcon={false}
           variant="plain"
         />
+
+        <div className="bg-red-800">{/* <Lucide.logo /> */}</div>
       </div>
+      <ToastContainer {...toastConfig} />
     </>
   );
 }
