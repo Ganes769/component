@@ -8,7 +8,7 @@ export type OptionPropTypes = {
 };
 
 import Autocompletefield from "./components/Autocompletefield";
-import MultipleChip from "./components/MultipleChip";
+import Mult from "./components/MultipleChip";
 import useToasthook from "./components/Toaster/useToasthook";
 import Button from "./components/Button";
 import { ToastContainer } from "react-toastify";
@@ -17,6 +17,7 @@ import Chip from "./components/Chip";
 import ModalContent from "./components/ModalContent";
 import ConfirmationModal from "./components/ConfirmationModal";
 import Modal from "./components/Modal";
+import MultipleChip from "./components/MultipleChip";
 function App() {
   const { errorMsg, successMsg } = useToasthook();
   const modalref = useRef<{
@@ -38,7 +39,7 @@ function App() {
     setShowModal(true);
   }
 
-  const [defaultChips, setdefaulatChips] = useState<OptionPropTypes[]>([
+  const [values, setValues] = useState<OptionPropTypes[]>([
     {
       id: "1",
       name: "The Godfather: Part II",
@@ -53,7 +54,7 @@ function App() {
     setValue(value);
   };
   const handleChipChange = (value: OptionPropTypes[]) => {
-    setdefaulatChips(value);
+    setValues(values);
     console.log("selected tags are ", value);
   };
   const options: OptionPropTypes[] = [
@@ -112,31 +113,17 @@ function App() {
     },
   ];
   function handleAccept() {
-    console.log("acccepted ");
+    console.log("procced to next ");
   }
 
   return (
     <>
-      <div className="w-1/3 flex justify-center items-center flex-col gap-3 mt-10 mx-auto">
+      <div className="w-1/3 flex justify-center items-center flex-col gap-3  mx-auto">
         <MultipleChip
           className="bg-white"
-          value={defaultChips}
+          value={values}
           options={options}
           onChange={handleChipChange}
-        />
-        {/* <Autocompletefield
-          tickOption={false}
-          className=""
-          value={value}
-          onChange={handleFieldChange}
-          options={options}
-        /> */}
-        <Autocompletefield
-          tickOption={true}
-          className=""
-          value={value}
-          onChange={handleFieldChange}
-          options={options}
         />
         {/* Modal -useimperativehandle */}
         <Button
@@ -145,7 +132,14 @@ function App() {
           title="Modal"
           variant="standard"
         />
-
+        <Autocompletefield
+          // disabled={true}
+          tickOption={true}
+          className=""
+          value={value}
+          onChange={handleFieldChange}
+          options={options}
+        />
         <ConfirmationModal
           onAccept={handleAccept}
           className="h-[200px] w-[300px]"
@@ -173,6 +167,13 @@ function App() {
           variant="plain"
         />
         {/* chips  */}
+        <MultipleChip
+          disabled={true}
+          className="bg-white"
+          value={values}
+          options={options}
+          onChange={handleChipChange}
+        />
         <Chip status="active" />
         <Chip status="deactive" />
         <Button
@@ -180,9 +181,23 @@ function App() {
           title="Details Modal"
           hasIcon={false}
           variant="plain"
+        />{" "}
+        {/* <div className="h-[250px]">hello</div> */}
+        <Autocompletefield
+          tickOption={true}
+          className=""
+          value={value}
+          onChange={handleFieldChange}
+          options={options}
         />
-
-        <div className="bg-red-800">{/* <Lucide.logo /> */}</div>
+        <Autocompletefield
+          disabled={true}
+          tickOption={true}
+          className=""
+          value={value}
+          onChange={handleFieldChange}
+          options={options}
+        />
       </div>
       <ToastContainer {...toastConfig} />
     </>

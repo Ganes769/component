@@ -34,7 +34,7 @@ const ConfirmationModal = forwardRef<
     }),
     []
   );
-  console.log(refId);
+  console.log("ref id is: ", refId);
   return (
     <>
       {showModal && (
@@ -54,9 +54,7 @@ const ConfirmationModal = forwardRef<
               <h1 className="text-black font-bold text-[18px]">
                 {title} {refId}
               </h1>
-              <p className="text-black text-center px-md">
-                {message} refid:{refId}
-              </p>
+              <p className="text-black text-center px-md">{message}</p>
               <div className="flex mt-3 w-full justify-center">
                 <Button
                   onClick={onAccept}
