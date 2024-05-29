@@ -1,16 +1,14 @@
 import "react-toastify/dist/ReactToastify.css";
 import { useRef, useState } from "react";
 import "./App.css";
-
+import "../app/globals.css";
 export type OptionPropTypes = {
   name: string;
   id: string;
 };
 
 import Autocompletefield from "./components/Autocompletefield";
-import Mult from "./components/MultipleChip";
 import useToasthook from "./components/Toaster/useToasthook";
-import Button from "./components/Button";
 import { ToastContainer } from "react-toastify";
 import { toastConfig } from "./components/Toaster/toastConfig";
 import Chip from "./components/Chip";
@@ -18,8 +16,16 @@ import ModalContent from "./components/ModalContent";
 import ConfirmationModal from "./components/ConfirmationModal";
 import Modal from "./components/Modal";
 import MultipleChip from "./components/MultipleChip";
+import { Button } from "./components/ui/button";
+import { DatePicker } from "./components/DatePicker";
+
 function App() {
-  const { errorMsg, successMsg } = useToasthook();
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  function handleDateSelect(newDate?: Date) {
+    console.log("selected date is :", newDate);
+    setDate(newDate);
+  }
+  const { errorMsg } = useToasthook();
   const modalref = useRef<{
     show: (title: string, message: string, refId: number) => void;
     cancel: () => void;
@@ -34,10 +40,6 @@ function App() {
   }
   // Detail modal
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  function displayDetailModal() {
-    setShowModal(true);
-  }
 
   const [values, setValues] = useState<OptionPropTypes[]>([
     {
@@ -77,21 +79,6 @@ function App() {
       id: "2",
       name: "Hello1",
     },
-    {
-      id: "3",
-      name: "12 Angry Men",
-    },
-    {
-      id: "4",
-      name: "The Return of the King",
-    },
-    {
-      id: "5",
-      name: "Hello4",
-    },
-    { id: "66", name: "The Shawshank Redemption" },
-  ];
-  const options1: OptionPropTypes[] = [
     {
       id: "3",
       name: "12 Angry Men",
@@ -152,12 +139,15 @@ function App() {
           onChange={handleChipChange}
         />
         {/* Modal -useimperativehandle */}
+        <Button variant="secondary" onClick={() => showConfirmModal()}>
+          ConfirmModal
+        </Button>
         <Button
-          onClick={() => showConfirmModal()}
-          hasIcon={false}
-          title="Modal"
-          variant="standard"
-        />
+          variant="secondary"
+          onClick={() => errorMsg("Title", "description")}
+        >
+          Toaster
+        </Button>
         <ConfirmationModal
           onAccept={handleAccept}
           className="h-[200px] w-[300px]"
@@ -171,28 +161,10 @@ function App() {
         >
           <ModalContent report={report} />
         </Modal>
-        {/* //Toaster */}
-        <Button
-          onClick={() => errorMsg("Title", "description")}
-          title="Error"
-          hasIcon={false}
-          variant="plain"
-        />
-        <Button
-          onClick={() => successMsg("Title", "description")}
-          title="Success"
-          hasIcon={false}
-          variant="plain"
-        />
+
         <Chip status="active" />
         <Chip status="deactive" />
-        <Button
-          onClick={() => displayDetailModal()}
-          title="Details Modal"
-          hasIcon={false}
-          variant="plain"
-        />{" "}
-        {/* <div className="h-[250px]">hello</div> */}
+
         <Autocompletefield
           // disabled={true}
           tickOption={true}
@@ -201,6 +173,7 @@ function App() {
           onChange={handleFieldChange}
           options={options}
         />
+        <DatePicker date={date} onSelectDate={handleDateSelect} />
       </div>
       <ToastContainer {...toastConfig} />
     </>

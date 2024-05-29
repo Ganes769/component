@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
-import Button from "./Button";
+import { Button } from "./ui/button";
 
 interface Props {
   onCancel: () => void;
@@ -56,20 +56,16 @@ const ConfirmationModal = forwardRef<
               </h1>
               <p className="text-black text-center px-md">{message}</p>
               <div className="flex mt-3 w-full justify-center">
+                <Button onClick={onAccept} variant="default">
+                  Proceed
+                </Button>
                 <Button
+                  className="ml-4"
                   onClick={onAccept}
-                  title="Proceed to Next"
-                  hasIcon={false}
-                  iconPos="end"
-                  variant="standard"
-                />
-                <Button
-                  onClick={onCancel}
-                  title="Cancel"
-                  hasIcon={false}
-                  iconPos="end"
-                  variant="outline"
-                />
+                  variant="destructive"
+                >
+                  Cancel
+                </Button>
               </div>
             </div>
           </div>
