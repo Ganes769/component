@@ -45,6 +45,12 @@ function App() {
       name: "The Godfather: Part II",
     },
   ]);
+
+  const [value1, setValue1] = useState<OptionPropTypes>({
+    id: "1",
+    name: "The value1: ",
+  });
+
   const [value, setValue] = useState<OptionPropTypes>({
     id: "1",
     name: "The Godfather: Part II",
@@ -53,6 +59,11 @@ function App() {
     console.log("Selected values are :", value);
     setValue(value);
   };
+  const handleFieldChange1 = (value: OptionPropTypes) => {
+    console.log("Selected values are :", value);
+    setValue1(value1);
+  };
+
   const handleChipChange = (value: OptionPropTypes[]) => {
     setValues(values);
     console.log("selected tags are ", value);
@@ -80,7 +91,21 @@ function App() {
     },
     { id: "66", name: "The Shawshank Redemption" },
   ];
-
+  const options1: OptionPropTypes[] = [
+    {
+      id: "3",
+      name: "12 Angry Men",
+    },
+    {
+      id: "4",
+      name: "The Return of the King",
+    },
+    {
+      id: "5",
+      name: "Hello4",
+    },
+    { id: "66", name: "The Shawshank Redemption" },
+  ];
   function closeModal() {
     modalref?.current?.cancel();
     console.log("cancel model");
@@ -120,7 +145,8 @@ function App() {
     <>
       <div className="w-1/3 flex justify-center items-center flex-col gap-3  mx-auto">
         <MultipleChip
-          className="bg-white"
+          disabled={true}
+          className="min-w-[400px] max-w-[340px]"
           value={values}
           options={options}
           onChange={handleChipChange}
@@ -131,14 +157,6 @@ function App() {
           hasIcon={false}
           title="Modal"
           variant="standard"
-        />
-        <Autocompletefield
-          // disabled={true}
-          tickOption={true}
-          className=""
-          value={value}
-          onChange={handleFieldChange}
-          options={options}
         />
         <ConfirmationModal
           onAccept={handleAccept}
@@ -166,14 +184,6 @@ function App() {
           hasIcon={false}
           variant="plain"
         />
-        {/* chips  */}
-        <MultipleChip
-          disabled={true}
-          className="bg-white"
-          value={values}
-          options={options}
-          onChange={handleChipChange}
-        />
         <Chip status="active" />
         <Chip status="deactive" />
         <Button
@@ -184,14 +194,7 @@ function App() {
         />{" "}
         {/* <div className="h-[250px]">hello</div> */}
         <Autocompletefield
-          tickOption={true}
-          className=""
-          value={value}
-          onChange={handleFieldChange}
-          options={options}
-        />
-        <Autocompletefield
-          disabled={true}
+          // disabled={true}
           tickOption={true}
           className=""
           value={value}

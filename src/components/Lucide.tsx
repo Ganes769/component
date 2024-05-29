@@ -16,6 +16,7 @@ import {
   Moon,
   MoreVertical,
   Pizza,
+  ChevronDown,
   Plus,
   Settings,
   SunMedium,
@@ -56,4 +57,5 @@ export const Lucide = {
   twitter: X,
   check: Check,
   circlex: CircleX,
+  ChevronDown: ChevronDown,
 };

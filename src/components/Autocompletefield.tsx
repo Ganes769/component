@@ -56,7 +56,7 @@ export default function Autocompletefield({
     );
   }
 
-  const boxRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLButtonElement>(null);
 
   const handleClickAway = useCallback(
     (event: Event) => {
@@ -76,51 +76,58 @@ export default function Autocompletefield({
     }
   }
 
+  function toggleList() {
+    setisOptionOpen(!isOptionOpen);
+    console.log("inside tiggle", isOptionOpen);
+  }
   return (
     <ClickAwayListener
       onClickAway={handleClickAway}
       onPositionChange={handlePositionChange}
     >
-      <div className="border border-gray-400" ref={boxRef}>
-        <button
-          onClick={() => setisOptionOpen(true)}
-          className={`relative w-[410px] flex  justify-center items-center ${className}  ${
-            disabled && "bg-[#FAFAFA] opacity-75"
-          }`}
-        >
-          <input
-            disabled={disabled}
-            value={!disabled ? userInput : ""}
-            onChange={handleInputChange}
-            onFocus={() => setisOptionOpen(true)}
-            className=" h-full w-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
-            type="text"
-            placeholder="Placeholder...."
-          />
+      <button
+        disabled={disabled}
+        ref={boxRef}
+        onClick={() => toggleList}
+        className={`relative w-[410px] flex border-2 border-gray-400  justify-center items-center ${className}  ${
+          disabled && "bg-[#FAFAFA] opacity-75"
+        }`}
+      >
+        <input
+          disabled={disabled}
+          value={!disabled ? userInput : ""}
+          onChange={handleInputChange}
+          onFocus={() => setisOptionOpen(true)}
+          className=" h-full  w-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
+          type="text"
+          placeholder="Placeholder...."
+        />
+        <span className="mr-1" onClick={toggleList}>
+          <Lucide.ChevronDown className={`${isOptionOpen && "rotate-180"}`} />
+        </span>
 
-          <ul
-            className={` z-10 bg-white shadow-md mt-2 flex flex-col scrollbar h-auto max-h-[200px]  rounded-md w-full absolute overflow-y-auto ${
-              openUpWards ? "bottom-full " : "top-full"
-            } ${isOptionOpen ? "block" : "border-none hidden "}`}
-          >
-            {isOptionOpen &&
-              suggestions.map((value, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleClickSuggestion(value)}
-                  className={`text-black bg-red- hover:bg-gray-300  text-[14px] p-1 m-2 flex justify-between ${
-                    value.name == userInput && "bg-[#F2F4F7] border  rounded-md"
-                  } `}
-                >
-                  {value.name}
-                  {tickOption && value.name == userInput && (
-                    <Lucide.check strokeWidth={2} color="#33B469" />
-                  )}
-                </li>
-              ))}
-          </ul>
-        </button>
-      </div>
+        <ul
+          className={` z-10 bg-white shadow-md mt-2 flex flex-col scrollbar h-auto max-h-[200px] animate-fadeInOut   rounded-md w-full absolute overflow-y-auto ${
+            openUpWards ? "bottom-full " : "top-full"
+          } ${isOptionOpen ? "block" : "border-none hidden "}`}
+        >
+          {isOptionOpen &&
+            suggestions.map((value, index) => (
+              <li
+                key={index}
+                onClick={() => handleClickSuggestion(value)}
+                className={`text-black  hover:bg-gray-300 rounded-md  text-[14px] p-2 m-2 flex  justify-between ${
+                  value.name == userInput && "bg-[#F2F4F7] border-2  rounded-md"
+                } `}
+              >
+                {value.name}
+                {tickOption && value.name == userInput && (
+                  <Lucide.check strokeWidth={2} color="#33B469" />
+                )}
+              </li>
+            ))}
+        </ul>
+      </button>
     </ClickAwayListener>
   );
 }

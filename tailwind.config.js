@@ -16,6 +16,11 @@ export default {
           "40%": { opacity: "0.5" },
           "100%": { opacity: "1" },
         },
+        fadeInOut: {
+          "0%": { opacity: "0" },
+          "40%": { opacity: "0,5" },
+          "100%": { opacity: "1" },
+        },
       },
       colors: {
         primaryColor: "#6861ff",
@@ -31,6 +36,7 @@ export default {
         sm: "4px",
       },
       animation: {
+        fadeInOut: "fadeInOut 0.2s ease-in-out forwards",
         scaleIn: "scaleIn 0.4s ease-in-out forwards",
         blur: "blur 0.4s ease-in-out forwards",
         fade: "blur 0.4s ease-in-out forwards",

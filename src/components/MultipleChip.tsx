@@ -23,7 +23,7 @@ function MultipleChip({
   const [openUpWards, setOpenUpwards] = useState<boolean>(false);
 
   const [selectedOption, setSelectedOption] = useState<OptionPropTypes[]>([]);
-  const boxRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLButtonElement>(null);
 
   function hadleClickSuggestion(value: OptionPropTypes) {
     const isDuplicate = selectedOption.some((item) => item.id === value.id);
@@ -82,65 +82,64 @@ function MultipleChip({
       onClickAway={handleClickAway}
       onPositionChange={handlePositionChange}
     >
-      <div ref={boxRef}>
-        <button
-          disabled={disabled}
-          onClick={() => setisOptionOpen(true)}
-          className={`relative min-w-[400px] max-w-[340px] ${className}`}
+      <button
+        ref={boxRef}
+        disabled={disabled}
+        onClick={() => setisOptionOpen(true)}
+        className={`relative  ${className}`}
+      >
+        <div
+          className={`flex flex-row flex-wrap border-2 ${
+            disabled && "bg-[#FAFAFA] opacity-75"
+          }`}
         >
-          <div
-            className={`flex flex-row flex-wrap border-2 ${
-              disabled && "bg-[#FAFAFA] opacity-75"
-            }`}
-          >
-            {selectedOption.map((item) => (
-              <span
-                key={item.id}
-                className={`border-2 border-[#BCBDBC] m-2 inline-flex items-center whitespace-nowrap  rounded-full font-semibold  bg-[#E9E9E8] py-1 px-2 font-sans text-xs  uppercase ${
-                  disabled && "bg-[#FAFAFA] opacity-75"
-                } `}
-              >
-                <span className="mr-2 cursor-pointer ">{item.name}</span>
-                <span>
-                  <Lucide.circlex
-                    size={18}
-                    onClick={() => handleDeleteChip(item.id)}
-                  />
-                </span>
+          {selectedOption.map((item) => (
+            <span
+              key={item.id}
+              className={`border-2 border-[#BCBDBC] m-2 inline-flex items-center whitespace-nowrap  rounded-full font-semibold  bg-[#E9E9E8] py-1 px-2 font-sans text-xs  uppercase ${
+                disabled && "bg-[#FAFAFA] opacity-75"
+              } `}
+            >
+              <span className="mr-2 cursor-pointer ">{item.name}</span>
+              <span>
+                <Lucide.circlex
+                  size={18}
+                  onClick={() => handleDeleteChip(item.id)}
+                />
               </span>
-            ))}
-            <input
-              disabled={disabled}
-              value={option}
-              onChange={handleInputChange}
-              onFocus={() => setisOptionOpen(true)}
-              className="w-full flex-grow focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
-              type="text"
-              placeholder="Placeholder....."
-            />
-          </div>
+            </span>
+          ))}
+          <input
+            disabled={disabled}
+            value={option}
+            onChange={handleInputChange}
+            onFocus={() => setisOptionOpen(true)}
+            className="w-full flex-grow focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
+            type="text"
+            placeholder="Placeholder....."
+          />
+        </div>
 
-          <ul
-            className={`bg-white mt-2 max-h-[200px] w-full scrollbar  overflow-y-auto shadow-md rounded-md absolute z-10 ${
-              isOptionOpen ? "block" : "hidden"
-            } ${openUpWards ? "bottom-full " : "top-full"}  `}
-          >
-            {isOptionOpen &&
-              suggestions.map((value, index) => (
-                <li
-                  key={index}
-                  onClick={() => hadleClickSuggestion(value)}
-                  className={`p-1 flex justify-between m-1 text-black text-[14px] hover:bg-gray-300 ${
-                    selectedOption.some((item) => item.id === value.id) &&
-                    "bg-[#F2F4F7]"
-                  }`}
-                >
-                  {value.name}
-                </li>
-              ))}
-          </ul>
-        </button>
-      </div>
+        <ul
+          className={`bg-white mt-2 max-h-[200px] w-full scrollbar  overflow-y-auto shadow-md rounded-md absolute z-10 animate-fadeInOut ${
+            isOptionOpen ? "block" : "hidden"
+          } ${openUpWards ? "bottom-full " : "top-full"}  `}
+        >
+          {isOptionOpen &&
+            suggestions.map((value, index) => (
+              <li
+                key={index}
+                onClick={() => hadleClickSuggestion(value)}
+                className={`p-2 rounded-md  flex justify-between m-2 text-black text-[14px] hover:bg-gray-300 ${
+                  selectedOption.some((item) => item.id === value.id) &&
+                  "bg-[#F2F4F7]"
+                }`}
+              >
+                {value.name}
+              </li>
+            ))}
+        </ul>
+      </button>
     </ClickAwayListener>
   );
 }
