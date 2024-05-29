@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { OptionPropTypes } from "../App";
+import { OptionPropTypes } from "App";
 import { Lucide } from "./Lucide";
 import ClickAwayListener from "./ClickAwayListners";
 interface AutoCompleteFieldProps {
@@ -78,10 +78,7 @@ function MultipleChip({
   }, [value]);
   console.log("outside", isOptionOpen);
   return (
-    <ClickAwayListener
-      onClickAway={handleClickAway}
-      onPositionChange={handlePositionChange}
-    >
+    <ClickAwayListener onClickAway={handleClickAway}>
       <button
         ref={boxRef}
         disabled={disabled}

@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { OptionPropTypes } from "../App";
+import { OptionPropTypes } from "../../App";
 import { Lucide } from "./Lucide";
 import ClickAwayListener from "./ClickAwayListners";
 
@@ -98,7 +98,7 @@ export default function Autocompletefield({
           value={!disabled ? userInput : ""}
           onChange={handleInputChange}
           onFocus={() => setisOptionOpen(true)}
-          className=" h-full  w-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
+          className={`h-full focus w-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent }`}
           type="text"
           placeholder="Placeholder...."
         />
