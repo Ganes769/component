@@ -36,6 +36,8 @@ export default function Autocompletefield({
   const [isOptionOpen, setisOptionOpen] = useState<boolean>(false);
   const [suggestions, setSuggestions] = useState<OptionPropTypes[]>(options);
   const [openUpWards, setOpenUpwards] = useState<boolean>(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+
   function handleClickSuggestion(option: OptionPropTypes) {
     const selectedValue = option.name;
     setUserInput(selectedValue);
@@ -55,8 +57,6 @@ export default function Autocompletefield({
       )
     );
   }
-
-  const boxRef = useRef<HTMLButtonElement>(null);
 
   const handleClickAway = useCallback(
     (event: Event) => {
@@ -78,18 +78,17 @@ export default function Autocompletefield({
 
   function toggleList() {
     setisOptionOpen(!isOptionOpen);
-    console.log("inside tiggle", isOptionOpen);
+    console.log("inside toggle", isOptionOpen);
   }
   return (
     <ClickAwayListener
       onClickAway={handleClickAway}
       onPositionChange={handlePositionChange}
     >
-      <button
-        disabled={disabled}
+      <div
         ref={boxRef}
         onClick={() => toggleList}
-        className={`relative w-[410px] flex border-2 border-gray-400  justify-center items-center ${className}  ${
+        className={` boredr-2 border-gray-500 relative w-[300px] sm:w-[400px] focus-within:border-2 focus-within:border-blue-600 flex border-2   justify-center items-center ${className}  ${
           disabled && "bg-[#FAFAFA] opacity-75"
         }`}
       >
@@ -98,25 +97,25 @@ export default function Autocompletefield({
           value={!disabled ? userInput : ""}
           onChange={handleInputChange}
           onFocus={() => setisOptionOpen(true)}
-          className=" h-full  w-full focus:border-transparent active:border-transparent px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
+          className=" h-full  w-full focus:border-none active:border-nonet px-4 py-2 border-none focus:outline-none focus:ring-2 focus:ring-transparent"
           type="text"
           placeholder="Placeholder...."
         />
-        <span className="mr-1" onClick={toggleList}>
+        <button disabled={disabled} onClick={toggleList}>
           <Lucide.ChevronDown className={`${isOptionOpen && "rotate-180"}`} />
-        </span>
+        </button>
 
         <ul
-          className={` z-10 bg-white shadow-md mt-2 flex flex-col scrollbar h-auto max-h-[200px] animate-fadeInOut   rounded-md w-full absolute overflow-y-auto ${
+          className={` z-10 bg-white shadow-md mt-2  flex-col scrollbar h-auto max-h-[200px]   rounded-md w-full absolute overflow-y-auto ${
             openUpWards ? "bottom-full " : "top-full"
-          } ${isOptionOpen ? "block" : "border-none hidden "}`}
+          } ${isOptionOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
         >
           {isOptionOpen &&
             suggestions.map((value, index) => (
               <li
                 key={index}
                 onClick={() => handleClickSuggestion(value)}
-                className={`text-black  hover:bg-gray-300 rounded-md  text-[14px] p-2 m-2 flex  justify-between ${
+                className={`text-black  hover:bg-gray-300 rounded-md  text-[14px] p-1 sm:p-2 sm:m-2 flex  justify-between ${
                   value.name == userInput && "bg-[#F2F4F7] border-2  rounded-md"
                 } `}
               >
@@ -127,7 +126,7 @@ export default function Autocompletefield({
               </li>
             ))}
         </ul>
-      </button>
+      </div>
     </ClickAwayListener>
   );
 }

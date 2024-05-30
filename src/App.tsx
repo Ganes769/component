@@ -15,12 +15,35 @@ import Chip from "./components/Chip";
 import ModalContent from "./components/ModalContent";
 import ConfirmationModal from "./components/ConfirmationModal";
 import Modal from "./components/Modal";
-import MultipleChip from "./components/MultipleChip";
 import { Button } from "./components/ui/button";
 import { DatePicker } from "./components/DatePicker";
+import { InputOTPControlled } from "./components/Inputotp";
+import MultipleChip from "./components/MultipleChip";
 
+import { SwitchDemo } from "./components/SwitchDemo";
+import { Tooltip, TooltipProvider } from "@radix-ui/react-tooltip";
+import TooltipDemo from "./components/Tooltipdemo";
+import { DateRange, Matcher } from "react-day-picker";
+// import { DatePickerWithRange } from "./components/DateRangepicker";
+import { addDays } from "date-fns";
+import { DatePickerWithRange } from "./components/DatePickerRange";
 function App() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [otp, setOtp] = useState<string | undefined>();
+  const [switches, setSwitch] = useState<boolean>(true);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  function handleDateRange(dateRange?: DateRange) {
+    setDateRange(dateRange);
+    console.log("daterange", dateRange);
+  }
+  function handleSwitchChange(check: boolean) {
+    console.log("switch chnaged", check);
+    setSwitch(check);
+  }
+  function handleOtp(otp?: string) {
+    setOtp(otp);
+    console.log("otp entered is:", otp);
+  }
   function handleDateSelect(newDate?: Date) {
     console.log("selected date is :", newDate);
     setDate(newDate);
@@ -38,20 +61,15 @@ function App() {
       77
     );
   }
-  // Detail modal
+
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const [values, setValues] = useState<OptionPropTypes[]>([
     {
       id: "1",
-      name: "The Godfather: Part II",
+      name: "Part II",
     },
   ]);
-
-  const [value1, setValue1] = useState<OptionPropTypes>({
-    id: "1",
-    name: "The value1: ",
-  });
 
   const [value, setValue] = useState<OptionPropTypes>({
     id: "1",
@@ -60,10 +78,6 @@ function App() {
   const handleFieldChange = (value: OptionPropTypes) => {
     console.log("Selected values are :", value);
     setValue(value);
-  };
-  const handleFieldChange1 = (value: OptionPropTypes) => {
-    console.log("Selected values are :", value);
-    setValue1(value1);
   };
 
   const handleChipChange = (value: OptionPropTypes[]) => {
@@ -127,13 +141,16 @@ function App() {
   function handleAccept() {
     console.log("procced to next ");
   }
-
+  const disabledDates = {
+    from: new Date("2024-05-23"),
+    to: new Date("2024-05-29"),
+  };
   return (
     <>
       <div className="w-1/3 flex justify-center items-center flex-col gap-3  mx-auto">
         <MultipleChip
-          disabled={true}
-          className="min-w-[400px] max-w-[340px]"
+          // disabled={true}
+          className=""
           value={values}
           options={options}
           onChange={handleChipChange}
@@ -148,23 +165,6 @@ function App() {
         >
           Toaster
         </Button>
-        <ConfirmationModal
-          onAccept={handleAccept}
-          className="h-[200px] w-[300px]"
-          onCancel={() => closeModal()}
-          ref={modalref}
-        />
-        <Modal
-          className="h-[200px] w-[300px]"
-          showModal={showModal}
-          setShowModal={setShowModal}
-        >
-          <ModalContent report={report} />
-        </Modal>
-
-        <Chip status="active" />
-        <Chip status="deactive" />
-
         <Autocompletefield
           // disabled={true}
           tickOption={true}
@@ -173,7 +173,27 @@ function App() {
           onChange={handleFieldChange}
           options={options}
         />
-        <DatePicker date={date} onSelectDate={handleDateSelect} />
+        <ConfirmationModal
+          onAccept={handleAccept}
+          className="h-[200px] w-[300px]"
+          onCancel={() => closeModal()}
+          ref={modalref}
+        />
+        <Modal className="" showModal={showModal} setShowModal={setShowModal}>
+          <ModalContent report={report} />
+        </Modal>
+        <button onClick={() => setShowModal(true)}>modal</button>
+        {/* <Chip status="active" />
+        <Chip status="deactive" /> */}
+        <TooltipDemo />
+        <SwitchDemo setChange={handleSwitchChange} status={switches} />
+        <DatePickerWithRange date={dateRange} setDateRange={handleDateRange} />
+        <DatePicker
+          disableDates={disabledDates}
+          date={date}
+          onSelectDate={handleDateSelect}
+        />
+        <InputOTPControlled value={otp} setValue={handleOtp} />
       </div>
       <ToastContainer {...toastConfig} />
     </>

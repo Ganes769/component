@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { OptionPropTypes } from "../App";
 import { Lucide } from "./Lucide";
 import ClickAwayListener from "./ClickAwayListners";
+import Chip from "./Chip";
 interface AutoCompleteFieldProps {
   options: OptionPropTypes[];
   onChange: (value: OptionPropTypes[]) => void;
@@ -83,31 +84,33 @@ function MultipleChip({
       onPositionChange={handlePositionChange}
     >
       <button
-        ref={boxRef}
         disabled={disabled}
+        ref={boxRef}
         onClick={() => setisOptionOpen(true)}
-        className={`relative  ${className}`}
+        className={`relative border-2 border-gray-500 focus-within:border-2 focus-within:border-blue-500  w-[300px] sm:w-[400px]   ${className}`}
       >
         <div
-          className={`flex flex-row flex-wrap border-2 ${
+          className={`flex flex-row flex-wrap  ${
             disabled && "bg-[#FAFAFA] opacity-75"
           }`}
         >
           {selectedOption.map((item) => (
-            <span
-              key={item.id}
-              className={`border-2 border-[#BCBDBC] m-2 inline-flex items-center whitespace-nowrap  rounded-full font-semibold  bg-[#E9E9E8] py-1 px-2 font-sans text-xs  uppercase ${
-                disabled && "bg-[#FAFAFA] opacity-75"
-              } `}
-            >
-              <span className="mr-2 cursor-pointer ">{item.name}</span>
-              <span>
-                <Lucide.circlex
-                  size={18}
-                  onClick={() => handleDeleteChip(item.id)}
-                />
+            <Chip type="deactive">
+              <span
+                key={item.id}
+                className={`border-2 border-[#BCBDBC] m-2 inline-flex items-center whitespace-nowrap  rounded-full font-semibold  bg-[#E9E9E8] py-1 px-2 font-sans text-xs  uppercase ${
+                  disabled && "bg-[#FAFAFA] opacity-75"
+                } `}
+              >
+                <span className="mr-2 cursor-pointer ">{item.name}</span>
+                <span>
+                  <Lucide.circlex
+                    size={18}
+                    onClick={() => handleDeleteChip(item.id)}
+                  />
+                </span>
               </span>
-            </span>
+            </Chip>
           ))}
           <input
             disabled={disabled}
@@ -122,7 +125,7 @@ function MultipleChip({
 
         <ul
           className={`bg-white mt-2 max-h-[200px] w-full scrollbar  overflow-y-auto shadow-md rounded-md absolute z-10 animate-fadeInOut ${
-            isOptionOpen ? "block" : "hidden"
+            isOptionOpen ? "animate-fadeIn" : "animate-fadeOut"
           } ${openUpWards ? "bottom-full " : "top-full"}  `}
         >
           {isOptionOpen &&
@@ -130,7 +133,7 @@ function MultipleChip({
               <li
                 key={index}
                 onClick={() => hadleClickSuggestion(value)}
-                className={`p-2 rounded-md  flex justify-between m-2 text-black text-[14px] hover:bg-gray-300 ${
+                className={` rounded-md  flex justify-between p-2 m-1  sm:m-2 text-black text-[14px] hover:bg-gray-300 ${
                   selectedOption.some((item) => item.id === value.id) &&
                   "bg-[#F2F4F7]"
                 }`}

@@ -71,6 +71,10 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -88,19 +92,26 @@ module.exports = {
           "40%": { opacity: "0.5" },
           "100%": { opacity: "1" },
         },
-        fadeInOut: {
+        fadeIn: {
           "0%": { opacity: "0" },
-          "40%": { opacity: "0,5" },
+          "40%": { opacity: "0.5" },
           "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "40%": { opacity: "0.5" },
+          "100%": { opacity: "0" },
         },
       },
       animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        fadeInOut: "fadeInOut 0.2s ease-in-out forwards",
+        fadeIn: "fadeIn 0.2s ease-in-out",
         scaleIn: "scaleIn 0.4s ease-in-out forwards",
         blur: "blur 0.4s ease-in-out forwards",
         fade: "blur 0.4s ease-in-out forwards",
+        fadeOut: "fadeOut 1s ease-in-out",
       },
     },
   },

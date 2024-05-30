@@ -60,6 +60,7 @@ const ConfirmationModal = forwardRef<
                   Proceed
                 </Button>
                 <Button
+                  onClickCapture={() => setShowModal(false)}
                   className="ml-4"
                   onClick={onAccept}
                   variant="destructive"

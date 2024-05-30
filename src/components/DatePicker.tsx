@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -9,13 +9,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { DateRange } from "react-day-picker";
 interface DateProps {
+  disableDates?: DateRange;
   date?: Date;
   onSelectDate: (date?: Date) => void;
 }
-export function DatePicker({ date, onSelectDate }: DateProps) {
-  console.log("from date picker", date);
-
+export function DatePicker({ date, onSelectDate, disableDates }: DateProps) {
+  const { to, from } = disableDates;
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,6 +33,7 @@ export function DatePicker({ date, onSelectDate }: DateProps) {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
+          disabled={(date) => date <= to && date >= from}
           mode="single"
           selected={date}
           onSelect={(date) => onSelectDate(date)}
