@@ -3,6 +3,7 @@ import {
   ArrowRight,
   CircleX,
   Check,
+  CloudUpload ,
   ChevronLeft,
   ChevronRight,
   Command,
@@ -58,4 +59,5 @@ export const Lucide = {
   check: Check,
   circlex: CircleX,
   ChevronDown: ChevronDown,
+  CloudUpload :CloudUpload
 };
