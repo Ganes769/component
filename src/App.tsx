@@ -27,11 +27,14 @@ import { DateRange, Matcher } from "react-day-picker";
 // import { DatePickerWithRange } from "./components/DateRangepicker";
 import { addDays } from "date-fns";
 import { DatePickerWithRange } from "./components/DatePickerRange";
+import UploadImage, { UploadedFile } from "./components/image-upload/image-upload-component";
 function App() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [otp, setOtp] = useState<string | undefined>();
   const [switches, setSwitch] = useState<boolean>(true);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [selectedFiles, setSelectedFiles] = useState<UploadedFile[]>([]);
+
   function handleDateRange(dateRange?: DateRange) {
     setDateRange(dateRange);
     console.log("daterange", dateRange);
@@ -149,7 +152,7 @@ function App() {
     <>
       <div className="w-1/3 flex justify-center items-center flex-col gap-3  mx-auto">
         <MultipleChip
-          // disabled={true}
+          // disabled
           className=""
           value={values}
           options={options}
@@ -187,13 +190,11 @@ function App() {
         <Chip status="deactive" /> */}
         <TooltipDemo />
         <SwitchDemo setChange={handleSwitchChange} status={switches} />
-        <DatePickerWithRange date={dateRange} setDateRange={handleDateRange} />
-        <DatePicker
-          disableDates={disabledDates}
-          date={date}
-          onSelectDate={handleDateSelect}
-        />
+        <DatePickerWithRange date={dateRange} setDateRange={handleDateRange}/>
+        <DatePicker mode="range"/>
         <InputOTPControlled value={otp} setValue={handleOtp} />
+
+        <UploadImage value={selectedFiles} name="image" label="Image Upload" onChange={(data)=> setSelectedFiles(data) } onDrop={(data)=> setSelectedFiles(data)}  onRemove={(index)=>     setSelectedFiles(selectedFiles.filter((_, i) => i !== index))}/>
       </div>
       <ToastContainer {...toastConfig} />
     </>

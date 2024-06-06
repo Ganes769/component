@@ -54,7 +54,7 @@ export function DatePickerWithRange({
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             disabled={(date) =>
-              date <= new Date("2024-05-29") && date >= new Date("2024-05-23")
+              date <= new Date("2024-06-29") && date >= new Date("2024-06-23")
             }
             initialFocus
             mode="range"

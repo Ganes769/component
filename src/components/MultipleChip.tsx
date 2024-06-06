@@ -83,10 +83,9 @@ function MultipleChip({
       onClickAway={handleClickAway}
       onPositionChange={handlePositionChange}
     >
-      <button
-        disabled={disabled}
+      <div
         ref={boxRef}
-        onClick={() => setisOptionOpen(true)}
+        onClick={() => {if(!disabled)setisOptionOpen(true)}}
         className={`relative border-2 border-gray-500 focus-within:border-2 focus-within:border-blue-500  w-[300px] sm:w-[400px]   ${className}`}
       >
         <div
@@ -142,7 +141,7 @@ function MultipleChip({
               </li>
             ))}
         </ul>
-      </button>
+      </div>
     </ClickAwayListener>
   );
 }
