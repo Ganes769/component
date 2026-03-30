@@ -27,7 +27,10 @@ import { DateRange, Matcher } from "react-day-picker";
 // import { DatePickerWithRange } from "./components/DateRangepicker";
 import { addDays } from "date-fns";
 import { DatePickerWithRange } from "./components/DatePickerRange";
-import UploadImage, { UploadedFile } from "./components/image-upload/image-upload-component";
+import UploadImage, {
+  UploadedFile,
+} from "./components/image-upload/image-upload-component";
+import DashBoard from "./DashBoard/Dashboard";
 function App() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [otp, setOtp] = useState<string | undefined>();
@@ -61,7 +64,7 @@ function App() {
     modalref?.current?.show(
       "Connection Successful",
       "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-      77
+      77,
     );
   }
 
@@ -190,13 +193,23 @@ function App() {
         <Chip status="deactive" /> */}
         <TooltipDemo />
         <SwitchDemo setChange={handleSwitchChange} status={switches} />
-        <DatePickerWithRange date={dateRange} setDateRange={handleDateRange}/>
-        <DatePicker mode="range"/>
+        <DatePickerWithRange date={dateRange} setDateRange={handleDateRange} />
+        <DatePicker mode="range" />
         <InputOTPControlled value={otp} setValue={handleOtp} />
 
-        <UploadImage value={selectedFiles} name="image" label="Image Upload" onChange={(data)=> setSelectedFiles(data) } onDrop={(data)=> setSelectedFiles(data)}  onRemove={(index)=>     setSelectedFiles(selectedFiles.filter((_, i) => i !== index))}/>
+        <UploadImage
+          value={selectedFiles}
+          name="image"
+          label="Image Upload"
+          onChange={(data) => setSelectedFiles(data)}
+          onDrop={(data) => setSelectedFiles(data)}
+          onRemove={(index) =>
+            setSelectedFiles(selectedFiles.filter((_, i) => i !== index))
+          }
+        />
       </div>
       <ToastContainer {...toastConfig} />
+      <DashBoard />
     </>
   );
 }
